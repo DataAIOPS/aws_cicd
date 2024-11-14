@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Price Prediction</title>
+    <style>
+        /* Global Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        h1 {
+            color: #3e4b5b;
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Form Container */
+        #predictionForm {
+            max-width: 500px;
+            width: 100%;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* Form Labels and Inputs */
+        label {
+            font-size: 1em;
+            color: #3e4b5b;
+            margin-bottom: 5px;
+        }
+
+        input[type="number"] {
+            padding: 10px;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Submit Button */
+        button {
+            padding: 12px;
+            font-size: 1em;
+            font-weight: bold;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Result Display */
+        #predictionResultContainer {
+            margin-top: 20px;
+            font-size: 1.2em;
+            text-align: center;
+            color: #3e4b5b;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            #predictionForm {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>House Price Prediction</h1>
+        <form id="predictionForm">
+            <label for="bedrooms">Bedrooms:</label>
+            <input type="number" id="bedrooms" name="bedrooms" required>
+
+            <label for="bathrooms">Bathrooms:</label>
+            <input type="number" id="bathrooms" name="bathrooms" required>
+
+            <label for="sqft_living">Square Foot Living:</label>
+            <input type="number" id="sqft_living" name="sqft_living" required>
+
+            <label for="floors">Floors:</label>
+            <input type="number" id="floors" name="floors" required>
+
+            <label for="yr_built">Year Built:</label>
+            <input type="number" id="yr_built" name="yr_built" required>
+
+            <button type="button" onclick="makePrediction()">Predict Price</button>
+        </form>
+
+        <div id="predictionResultContainer">
+            <h2>Predicted Price: <span id="predictionResult"></span></h2>
+        </div>
+    </div>
+
+    <script>
+        async function makePrediction() {
+            // Collect form data
+            const data = {
+                bedrooms: parseFloat(document.getElementById("bedrooms").value),
+                bathrooms: parseFloat(document.getElementById("bathrooms").value),
+                sqft_living: parseFloat(document.getElementById("sqft_living").value),
+                floors: parseFloat(document.getElementById("floors").value),
+                yr_built: parseInt(document.getElementById("yr_built").value)
+            };
+
+            // Send data to Flask /predict endpoint
+            const response = await fetch("/predict", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+            document.getElementById("predictionResult").textContent = result.predicted_price || result.error;
+        }
+    </script>
+</body>
+</html>

@@ -60,3 +60,5 @@ stages:
       hash: md5
       md5: 675a3793d525852fae27441050d274b1
       size: 63
+  serve:
+    cmd: python app.py
