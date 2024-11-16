@@ -4,3 +4,4 @@ pandas
 pyyaml
 boto3
 Flask
+gunicorn
