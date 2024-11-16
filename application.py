@@ -4,17 +4,15 @@ import numpy as np
 
 application = Flask(__name__)
 
-app = application
-
 # Load the model
 with open('model.pkl', 'rb') as file:
     model = pickle.load(file)
 
-@app.route('/')
+@application.route('/')
 def home():
     return render_template('index.html')
 
-@app.route('/predict', methods=['POST'])
+@application.route('/predict', methods=['POST'])
 def predict():
     data = request.get_json(force=True)
     
