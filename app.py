@@ -6,7 +6,7 @@ app = Flask(__name__)
 a=1011
 
 # Load the model
-with open('model.pkl', 'rb') as file:
+with open('./app/model.pkl', 'rb') as file:
     model = pickle.load(file)
 
 @app.route('/')
