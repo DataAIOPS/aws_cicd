@@ -2,17 +2,17 @@ from flask import Flask, request, jsonify, render_template
 import pickle
 import numpy as np
 
-application = Flask(__name__)
+app = Flask(__name__)
 
 # Load the model
 with open('model.pkl', 'rb') as file:
     model = pickle.load(file)
 
-@application.route('/')
+@app.route('/')
 def home():
     return render_template('index.html')
 
-@application.route('/predict', methods=['POST'])
+@app.route('/predict', methods=['POST'])
 def predict():
     data = request.get_json(force=True)
     
