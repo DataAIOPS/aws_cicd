@@ -3,7 +3,7 @@ import pickle
 import numpy as np
 
 app = Flask(__name__)
-a=10
+a=101
 
 # Load the model
 with open('model.pkl', 'rb') as file:
