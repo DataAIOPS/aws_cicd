@@ -1,13 +1,13 @@
 from flask import Flask, request, jsonify, render_template
 import pickle
 import numpy as np
+import os
 
 app = Flask(__name__)
-a=1011
 
 # Load the model
-with open('./app/model.pkl', 'rb') as file:
-    model = pickle.load(file)
+model_path = os.path.join(os.getcwd(), "model.pkl")
+with open(model_path, "rb") as file:    model = pickle.load(file)
 
 @app.route('/')
 def home():
